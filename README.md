@@ -1,51 +1,51 @@
-# Meeting Summarizer
+<h1 align="center">🎯 Meeting Summarizer</h1>
+<p align="center">
+  Real-time AI-powered meeting recorder that captures, transcribes, and extracts action items instantly to boost team productivity.
+</p>
 
-## Overview
-Meeting Summarizer is a real-time AI-powered tool that records live meetings (Google Meet, Zoom, MS Teams), transcribes spoken content into text, and automatically extracts action items and key decisions to streamline team productivity.
-
----
-
-## Features
-- 🎥 Real-time screen and audio recording
-- 📝 Live transcription with speaker confidence
-- 🤖 Intelligent action item and decision extraction
-- 💾 Export recordings, transcripts, and summaries
-- 🌙 Modern UI with dark mode support
-- 🔒 Privacy-first: all data processed locally in browser
+<p align="center">
+  <a href="https://thulasirahul.github.io/Meeting-Summarizer/" target="_blank">
+    <img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen" />
+  </a>
+</p>
 
 ---
 
-## Getting Started
+## 🚀 Features
 
-### Prerequisites
-- Modern browser with media APIs (Chrome recommended)
-- Microphone and screen sharing permissions
-
-### Installation
-1. Clone the repository  
-2. Open the folder in VS Code  
-3. Install dependencies:  npm install
-4. Run locally with Live Server or use `npm start`
-
-### Usage
-1. Grant permissions for screen and microphone  
-2. Join your meeting in a separate tab/window  
-3. Start recording and select meeting tab/window  
-4. View live transcription and action items  
-5. Stop and export results  
+- 🎥 Real-time **screen & audio recording** from meetings (Google Meet, Zoom, Teams)
+- 🗣️ **Live speech-to-text transcription** with confidence scoring
+- ✅ Automatic **action item** & **decision detection**
+- 📄 Generate professional **meeting summaries**
+- 💾 Export recordings, transcripts, and summary files
+- 🌙 Modern, responsive UI with **dark mode**
+- 🔒 Privacy-first: all processing happens **locally in the browser**
 
 ---
 
-## Contributing
-Contributions are welcome! Please file issues or submit pull requests.
+## 📌 Quick Start
+
+1. **Open the [Live Demo](https://thulasirahul.github.io/Meeting-Summarizer/)**  
+2. Grant permissions for **screen & microphone**  
+3. Join your meeting in a different tab  
+4. Click **Start Recording** and select the meeting tab  
+5. View live transcription and action items  
+6. Click **Stop Recording** when finished  
+7. Download your video and meeting summary  
 
 ---
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+## 🤝 Contribute
+
+Contributions, issues, and feature requests are welcome!  
+Feel free to check the [issues page](https://github.com/thulasirahul/Meeting-Summarizer/issues).  
 
 ---
 
-*Made with ❤️ by Thulasi Rahul J*
+## 📝 License
 
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+---
+
+⌨️ Made with ❤️ by [Thulasirahul](https://github.com/thulasirahul)
