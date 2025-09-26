@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Summarizer - Real-time Capture & Analysis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🎬</span>
+                    <h1>Meeting Summarizer</h1>
+                </div>
+                <div class="header-status">
+                    <div class="connection-status" id="connectionStatus">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Ready</span>
+                    </div>
+                    <div class="recording-timer" id="recordingTimer">00:00:00</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Permission Panel -->
+            <section class="permission-panel card" id="permissionPanel">
+                <div class="card__header">
+                    <h2>Setup Recording Permissions</h2>
+                    <p>Grant permissions to start recording meetings</p>
+                </div>
+                <div class="card__body">
+                    <div class="permissions-grid">
+                        <div class="permission-item">
+                            <div class="permission-icon">🖥️</div>
+                            <div class="permission-details">
+                                <h3>Screen Capture</h3>
+                                <p>Allow access to capture your screen or specific application window</p>
+                                <span class="permission-status" id="screenStatus">Not granted</span>
+                            </div>
+                            <button class="btn btn--secondary" id="requestScreen">Grant Access</button>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-icon">🎤</div>
+                            <div class="permission-details">
+                                <h3>Microphone</h3>
+                                <p>Allow access to your microphone for audio recording and transcription</p>
+                                <span class="permission-status" id="micStatus">Not granted</span>
+                            </div>
+                            <button class="btn btn--secondary" id="requestMicrophone">Grant Access</button>
+                        </div>
+                    </div>
+                    <div class="browser-compatibility">
+                        <h4>Browser Compatibility</h4>
+                        <div class="browser-grid">
+                            <div class="browser-item">
+                                <span class="browser-name">Chrome</span>
+                                <span class="browser-support supported">✅ Full Support</span>
+                            </div>
+                            <div class="browser-item">
+                                <span class="browser-name">Firefox</span>
+                                <span class="browser-support supported">✅ Full Support</span>
+                            </div>
+                            <div class="browser-item">
+                                <span class="browser-name">Safari</span>
+                                <span class="browser-support limited">⚠️ Limited</span>
+                            </div>
+                            <div class="browser-item">
+                                <span class="browser-name">Edge</span>
+                                <span class="browser-support supported">✅ Full Support</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recording Control Panel -->
+            <section class="recording-panel card" id="recordingPanel">
+                <div class="card__header">
+                    <h2>Meeting Recording</h2>
+                    <p>Record and analyze your meetings in real-time</p>
+                </div>
+                <div class="card__body">
+                    <div class="recording-controls">
+                        <button class="btn btn--primary btn--large" id="startRecording" disabled>
+                            <span class="btn-icon">🔴</span>
+                            <span class="btn-text">Start Recording</span>
+                        </button>
+                        <div class="control-buttons" id="controlButtons" style="display: none;">
+                            <button class="btn btn--warning" id="pauseRecording">
+                                <span class="btn-icon">⏸️</span>
+                                Pause
+                            </button>
+                            <button class="btn btn--success" id="resumeRecording" style="display: none;">
+                                <span class="btn-icon">▶️</span>
+                                Resume
+                            </button>
+                            <button class="btn btn--danger" id="stopRecording">
+                                <span class="btn-icon">⏹️</span>
+                                Stop
+                            </button>
+                        </div>
+                    </div>
+                    <div class="recording-info">
+                        <div class="info-item">
+                            <span class="info-label">Status:</span>
+                            <span class="info-value" id="recordingStatus">Ready to record</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Duration:</span>
+                            <span class="info-value" id="recordingDuration">00:00:00</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">File Size:</span>
+                            <span class="info-value" id="fileSize">0 MB</span>
+                        </div>
+                    </div>
+                    <div class="preview-container" id="previewContainer" style="display: none;">
+                        <h4>Live Preview</h4>
+                        <video id="previewVideo" class="preview-video" autoplay muted></video>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Live Transcription Panel -->
+                <section class="transcription-panel card">
+                    <div class="card__header">
+                        <h2>Live Transcription</h2>
+                        <div class="transcription-controls">
+                            <select id="languageSelect" class="language-select">
+                                <option value="en-US">English (US)</option>
+                                <option value="en-GB">English (UK)</option>
+                                <option value="es-ES">Spanish</option>
+                                <option value="fr-FR">French</option>
+                                <option value="de-DE">German</option>
+                            </select>
+                            <button class="btn btn--small" id="clearTranscription">Clear</button>
+                        </div>
+                    </div>
+                    <div class="card__body">
+                        <div class="transcription-content" id="transcriptionContent">
+                            <div class="transcription-placeholder">
+                                <div class="placeholder-icon">🎤</div>
+                                <p>Start recording to see live transcription</p>
+                                <p class="placeholder-subtitle">Speech will appear here in real-time</p>
+                            </div>
+                        </div>
+                        <div class="transcription-stats" id="transcriptionStats">
+                            <div class="stat-item">
+                                <span class="stat-label">Words:</span>
+                                <span class="stat-value" id="wordCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Confidence:</span>
+                                <span class="stat-value" id="confidenceScore">0%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Language:</span>
+                                <span class="stat-value" id="detectedLanguage">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Action Items Panel -->
+                <section class="action-items-panel card">
+                    <div class="card__header">
+                        <h2>Action Items</h2>
+                        <div class="panel-controls">
+                            <span class="item-count" id="actionItemCount">0 items</span>
+                            <button class="btn btn--small" id="exportActionItems">Export</button>
+                        </div>
+                    </div>
+                    <div class="card__body">
+                        <div class="action-items-content" id="actionItemsContent">
+                            <div class="action-items-placeholder">
+                                <div class="placeholder-icon">📋</div>
+                                <p>No action items detected yet</p>
+                                <p class="placeholder-subtitle">Action items will appear automatically</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Decisions Panel -->
+            <section class="decisions-panel card">
+                <div class="card__header">
+                    <h2>Key Decisions</h2>
+                    <div class="panel-controls">
+                        <span class="item-count" id="decisionCount">0 decisions</span>
+                        <button class="btn btn--small" id="exportDecisions">Export</button>
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="decisions-content" id="decisionsContent">
+                        <div class="decisions-placeholder">
+                            <div class="placeholder-icon">💡</div>
+                            <p>No decisions detected yet</p>
+                            <p class="placeholder-subtitle">Key decisions will be highlighted automatically</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Export Panel -->
+            <section class="export-panel card" id="exportPanel" style="display: none;">
+                <div class="card__header">
+                    <h2>Export Meeting</h2>
+                    <p>Download your meeting recording and analysis</p>
+                </div>
+                <div class="card__body">
+                    <div class="export-options">
+                        <div class="export-item">
+                            <div class="export-info">
+                                <h4>Video Recording</h4>
+                                <p>Complete meeting recording in WebM format</p>
+                            </div>
+                            <button class="btn btn--secondary" id="downloadVideo" disabled>
+                                <span class="btn-icon">📹</span>
+                                Download Video
+                            </button>
+                        </div>
+                        <div class="export-item">
+                            <div class="export-info">
+                                <h4>Transcription</h4>
+                                <p>Full text transcription of the meeting</p>
+                            </div>
+                            <button class="btn btn--secondary" id="downloadTranscription" disabled>
+                                <span class="btn-icon">📝</span>
+                                Download Text
+                            </button>
+                        </div>
+                        <div class="export-item">
+                            <div class="export-info">
+    <h4>Meeting Summary (TXT)</h4>
+    <p>Formatted text report with action items and decisions</p>
+</div>
+
+                            <button class="btn btn--secondary" id="downloadSummary" disabled>
+                                <span class="btn-icon">📊</span>
+                                Download Summary
+                            </button>
+                        </div>
+                        <div class="export-item">
+                            <div class="export-info">
+                                <h4>Complete Package</h4>
+                                <p>All files bundled together</p>
+                            </div>
+                            <button class="btn btn--primary" id="downloadAll" disabled>
+                                <span class="btn-icon">📦</span>
+                                Download All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Status Toast -->
+        <div class="toast" id="toast">
+            <div class="toast-content">
+                <span class="toast-icon" id="toastIcon">ℹ️</span>
+                <span class="toast-message" id="toastMessage">Ready to start recording</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
